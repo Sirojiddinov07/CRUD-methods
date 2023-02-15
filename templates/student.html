@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+
+<head>
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+</head>
+<body>
+<a href="{% url 'index'%}">Group</a>
+
+<h1>Students</h1>
+
+<table id="customers">
+  <tr>
+    <th>Group</th>
+    <th>teacher</th>
+    <th>name</th>
+    <th>age</th>
+    <th>change</th>
+    <th>delete</th>
+  </tr>
+    {% for i in student %}
+  <tr>
+    <td>{{ i.group.name }}</td>
+    <td>{{ i.group.teacher }}</td>
+    <td>{{ i.name }}</td>
+    <td>{{ i.age }}</td>
+    <td><a href="{% url 'change-student' i.id %}"> Change</a></td>
+    <td><a href="{% url 'delete-student' i.id %}"><i class="fas fa-trash"></i></a></td>
+  </tr>
+    {% endfor %}
+</table>
+<form action="{% url 'student' %}" method="post">
+    {% csrf_token %}
+    <h3>Add Student </h3>
+    <select name="group" id=""  >
+        {% for i in group %}
+        <option value="{{ i.id }}">{{ i.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="text" name="name"  placeholder="enter name">
+    <input type="number" name="age" placeholder="enter age">
+    <button>Save</button>
+</form>
+</body>
+</html>
+
+

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+</head>
+<body>
+<a href="{% url 'student'%}">Student</a>
+<h1>Groups</h1>
+
+<table id="customers">
+  <tr>
+    <th>Names</th>
+    <th>Teachers</th>
+    <th>delete</th>
+  </tr>
+    {% for i in group %}
+  <tr>
+    <td>{{ i.name }}</td>
+    <td>{{ i.teacher }}</td>
+    <td><a href="{% url 'delete-group' i.id %}"><i class="btn btn-danger">del</i></a></td>
+
+  </tr>
+    {% endfor %}
+</table>
+
+
+<form action="{% url 'index' %}" method="post">
+    <h3>Add Group</h3>
+    {% csrf_token %}
+    <input type="text" name="group" placeholder="enter group" required>
+    <input type="text" name="teacher" placeholder="enter teacher" required>
+    <button>Save</button>
+</form>
+
+</body>
+</html>
+
+
